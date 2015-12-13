@@ -3,7 +3,7 @@
 import sys
 import os
 import termios
-import select
+import uselect as select
 import ffilib
 
 if len(sys.argv) < 2:
@@ -36,9 +36,9 @@ if pid:
     term_state = termios.tcgetattr(0)
     termios.setraw(0)
 
-    poll = select.epoll()
-    poll.register(0, select.EPOLLIN)
-    poll.register(fd_m, select.EPOLLIN)
+    poll = select.poll()
+    poll.register(0, select.POLLIN)
+    poll.register(fd_m, select.POLLIN)
 
     quit = False
     try:
@@ -50,10 +50,10 @@ if pid:
                     data = os.read(0, 64)
                     os.write(fd_m, data)
                 else:
-                    if event & select.EPOLLIN:
+                    if event & select.POLLIN:
                         data = os.read(fd_m, 128)
                         os.write(1, data)
-                    if event & select.EPOLLHUP:
+                    if event & select.POLLHUP:
                         quit = True
                         break
     finally:
