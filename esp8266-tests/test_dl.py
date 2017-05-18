@@ -55,8 +55,12 @@ def dl(url, debug=False):
 # http://archive.ubuntu.com/ubuntu/dists/xenial/main/installer-amd64/current/images/hd-media/
 
 FILES = [
-    ("http://archive.ubuntu.com/ubuntu/dists/xenial/main/installer-amd64/current/images/hd-media/boot.img.gz",
-     "9602e52394ac820c3121bb394ad92520e1a7bc0a"),
+    # 6.7M
+    ("http://archive.ubuntu.com/ubuntu/dists/xenial/main/installer-amd64/current/images/hd-media/vmlinuz",
+     "337c37d7ec00348414224baa6bdb2d43f2a34ef5676bafcdcad916f148b5b317"),
+    # 23M
+#    ("http://archive.ubuntu.com/ubuntu/dists/xenial/main/installer-amd64/current/images/hd-media/boot.img.gz",
+#     "30a6ebda5b3f7e2c3131ef99272fea47c0ec153c7a99f358ce1ce653b1eb23b2"),
 #    ("http://archive.ubuntu.com/ubuntu/dists/xenial/main/installer-amd64/current/images/udeb.list",
 #     "eb26cc410b9d60eb0ab927bd972ae09fe47431de"),
 ]
