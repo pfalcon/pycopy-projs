@@ -13,6 +13,11 @@ HASH_TYPE = uhashlib.sha1
 READ_SIZE = 1024
 
 
+def dump_state():
+    import esp
+    print("ESP bufs: tx:%d rx:%d" % (esp.esf_free_bufs(0), esp.esf_free_bufs(4)))
+
+
 def dl(url, debug=False):
     proto, dummy, host, path = url.split("/", 3)
     ai = socket.getaddrinfo(host, 80)
@@ -78,7 +83,7 @@ def main():
                 size, sha = dl(url)
             except OSError as e:
                 sys.print_exception(e)
-                print("ESP bufs: tx:%d rx:%d" % (esp.esf_free_bufs(0), esp.esf_free_bufs(4)))
+                dump_state()
                 fails += 1
                 time.sleep(2)
                 continue
