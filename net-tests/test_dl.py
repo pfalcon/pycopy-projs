@@ -10,6 +10,7 @@ import network
 #sta.active(1); sta.connect()
 
 HASH_TYPE = uhashlib.sha1
+READ_SIZE = 1024
 
 
 def dl(url, debug=False):
@@ -36,7 +37,7 @@ def dl(url, debug=False):
         hash.update(buf)
         size += len(buf)
         while 1:
-            buf = s.read(1024)
+            buf = s.read(READ_SIZE)
             if buf == b"": break
             hash.update(buf)
             size += len(buf)
