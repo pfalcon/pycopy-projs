@@ -3,11 +3,7 @@ import time
 import socket
 import uhashlib
 import ubinascii
-import esp
-import network
 
-#sta = network.WLAN(network.STA_IF)
-#sta.active(1); sta.connect()
 
 HASH_TYPE = uhashlib.sha1
 READ_SIZE = 1024
