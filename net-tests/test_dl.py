@@ -16,7 +16,9 @@ def dl(url, debug=False):
     ai = socket.getaddrinfo(host, 80)
     addr = ai[0][4]
     s = socket.socket()
-    s.settimeout(10)
+    if hasattr(s, "settimeout"):
+        s.settimeout(10)
+
     try:
         s.connect(addr)
         s.write(b"GET /%s HTTP/1.0\r\nHost: %s\r\n\r\n" % (path, host))
