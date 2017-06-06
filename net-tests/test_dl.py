@@ -37,7 +37,7 @@ def dl(url, debug=False):
             if buf == b"": break
             hash.update(buf)
             size += len(buf)
-            sys.stdout.write("%dK\r" % (size >> 10))
+            print("%dK\r" % (size >> 10), end="")
 #            sta.active(False)
         delta = time.ticks_diff(time.ticks_ms(), t)
         #print()
