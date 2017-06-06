@@ -9,6 +9,8 @@ import network
 #sta = network.WLAN(network.STA_IF)
 #sta.active(1); sta.connect()
 
+HASH_TYPE = uhashlib.sha1
+
 
 def dl(url, debug=False):
     proto, dummy, host, path = url.split("/", 3)
@@ -22,7 +24,7 @@ def dl(url, debug=False):
         s.connect(addr)
         s.write(b"GET /%s HTTP/1.0\r\nHost: %s\r\n\r\n" % (path, host))
         size = 0
-        hash = uhashlib.sha1()
+        hash = HASH_TYPE()
         t = time.ticks_ms()
         buf = s.read(2000)
         assert buf, buf
@@ -46,7 +48,7 @@ def dl(url, debug=False):
         print("Speed: %s bytes/s" % (size / delta * 1000))
         print("Elapsed: %s" % (delta / 1000))
         sha = str(ubinascii.hexlify(hash.digest()), "ascii")
-        print("SHA1 :", sha)
+        print("Hash :", sha)
         return size, sha
     finally:
         s.close()
@@ -81,7 +83,7 @@ def main():
                 continue
             total += size
             if sha != exp_sha:
-                print("INVALID SHA1")
+                print("INVALID HASH")
             print("Total downloaded so far: %dM" % (total >> 20))
 
 main()
