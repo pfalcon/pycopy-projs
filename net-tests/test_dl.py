@@ -86,5 +86,6 @@ def main():
             if sha != exp_sha:
                 print("INVALID HASH")
             print("Total downloaded so far: %dM" % (total >> 20))
+            time.sleep(1)
 
 main()
