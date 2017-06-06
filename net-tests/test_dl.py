@@ -1,6 +1,8 @@
 import sys
 import time
 import socket
+import uhashlib
+import ubinascii
 import esp
 import network
 
@@ -9,9 +11,6 @@ import network
 
 
 def dl(url, debug=False):
-    import uhashlib
-    import ubinascii
-
     proto, dummy, host, path = url.split("/", 3)
     ai = socket.getaddrinfo(host, 80)
     addr = ai[0][4]
