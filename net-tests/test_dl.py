@@ -9,9 +9,18 @@ HASH_TYPE = uhashlib.sha1
 READ_SIZE = 1024
 
 
-def dump_state():
-    import esp
-    print("ESP bufs: tx:%d rx:%d" % (esp.esf_free_bufs(0), esp.esf_free_bufs(4)))
+# Platform-specific dump_state() function
+if sys.platform == "esp8266":
+    def dump_state():
+        import esp
+        print("bufs: tx:%d rx:%d" % (esp.esf_free_bufs(0), esp.esf_free_bufs(4)))
+elif sys.platform == "zephyr":
+    def dump_state():
+        print("bufs:", socket.pkt_get_info())
+else:
+    def dump_state():
+        import micropython
+        micropython.mem_info()
 
 
 def dl(url, debug=False):
