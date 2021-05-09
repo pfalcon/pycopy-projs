@@ -49,15 +49,19 @@ def check_powermode(fd):
         return "unknown(%x)" % args[2]
 
 
+def format_time(t):
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(t))
+
+
 def measure(fd):
     active_time = 0
     sleep_time = 0
     unknown_time = 0
     changes = 0
     last_state = check_powermode(fd)
-    start_time = last_time = time.time()
+    start_time = last_time = int(time.time())
     show_indicator(last_state)
-    print("%d Starting in: %s" % (start_time, last_state))
+    print("%s Starting in: %s" % (format_time(start_time), last_state))
 
     while True:
         time.sleep(2)
@@ -66,7 +70,7 @@ def measure(fd):
         if curr_state != last_state:
             show_indicator(curr_state)
             changes += 1
-            curr_time = time.time()
+            curr_time = int(time.time())
             time_diff = curr_time - last_time
 
             if last_state == ACTIVE:
@@ -75,9 +79,9 @@ def measure(fd):
                 sleep_time += time_diff
             else:
                 unknown_time += time_diff
-            print("Spent %.2fs in this mode" % time_diff)
-            print("%d Switching to: %s (total: a:%.2f s:%.2f u:%.2f)" % (
-                curr_time, curr_state, active_time, sleep_time, unknown_time
+            print("Spent %ds in %s mode" % (time_diff, last_state))
+            print("%s Switching to: %s (total: a:%ds s:%ds u:%ds)" % (
+                format_time(curr_time), curr_state, active_time, sleep_time, unknown_time
             ))
 
             last_state = curr_state
