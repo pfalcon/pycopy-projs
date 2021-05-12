@@ -79,9 +79,10 @@ def measure(fd):
                 sleep_time += time_diff
             else:
                 unknown_time += time_diff
-            print("Spent %ds in %s mode" % (time_diff, last_state))
-            print("%s Switching to: %s (total: a:%ds s:%ds u:%ds)" % (
-                format_time(curr_time), curr_state, active_time, sleep_time, unknown_time
+            print("Spent %ds (%.1fm) in %s mode" % (time_diff, time_diff / 60, last_state))
+            print("%s Switching to: %s (total: a:%dm s:%dm u:%ds)" % (
+                format_time(curr_time), curr_state,
+                active_time // 60, sleep_time // 60, unknown_time
             ))
 
             last_state = curr_state
