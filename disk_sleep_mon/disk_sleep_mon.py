@@ -21,6 +21,9 @@ except ImportError:
     LED = None
 
 
+DUMP_DMESG_ON_WAKEUP = 1
+
+
 ACTIVE = "active"
 SLEEP = "sleep"
 UNKNOWN = "unknown"
@@ -80,6 +83,11 @@ def measure(fd):
             else:
                 unknown_time += time_diff
             print("Spent %ds (%.1fm) in %s mode" % (time_diff, time_diff / 60, last_state))
+
+            if DUMP_DMESG_ON_WAKEUP:
+                if last_state == SLEEP:
+                    os.system("dmesg -c")
+
             print("%s Switching to: %s (total: a:%dm s:%dm u:%ds)" % (
                 format_time(curr_time), curr_state,
                 active_time // 60, sleep_time // 60, unknown_time
