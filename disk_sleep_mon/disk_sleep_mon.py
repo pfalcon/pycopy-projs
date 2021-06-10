@@ -88,9 +88,10 @@ def measure(fd):
                 if last_state == SLEEP:
                     os.system("dmesg --time-format=iso -c")
 
-            print("%s Switching to: %s (total: a:%dm s:%dm u:%ds)" % (
+            print("%s Switching to: %s (total: a:%dm s:%dm u:%ds ch:%d)" % (
                 format_time(curr_time), curr_state,
-                active_time // 60, sleep_time // 60, unknown_time
+                active_time // 60, sleep_time // 60, unknown_time,
+                changes
             ))
 
             last_state = curr_state
