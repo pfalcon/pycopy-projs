@@ -33,6 +33,8 @@ f_temp = open(TEMP)
 f_pwm = open(FAN_PWM, "w")
 f_rpm = open(FAN_RPM)
 
+prev_temp = 0
+
 while True:
     temp = get_val(f_temp) / 1000
     rpm = get_val(f_rpm)
@@ -50,9 +52,11 @@ while True:
         extra = ", temp ratio: %.2f" % temp_pcnt
         pwm_val = int(pwm_val)
 
-    print("%s cur temp: %.1f, cur rpm: %s, new pwm: %s%s" % (
-        tstamp(), temp, rpm, pwm_val, extra
-    ))
+    if temp != prev_temp:
+        print("%s cur temp: %.1f, cur rpm: %s, new pwm: %s%s" % (
+            tstamp(), temp, rpm, pwm_val, extra
+        ))
 
     set_val(f_pwm, pwm_val)
+    prev_temp = temp
     time.sleep(PERIOD)
